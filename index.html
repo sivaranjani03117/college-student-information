@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>College Student Information</title>
+  <style>
+    /* Simple modern styling */
+    :root{
+      --bg:#f6f8fb; --card:#ffffff; --muted:#6b7280; --accent:#2563eb;
+      --success:#16a34a; --danger:#dc2626;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    body{
+      margin:0;
+      background:linear-gradient(180deg,#eef2ff 0%, var(--bg) 100%);
+      padding:24px;
+      color:#0f172a;
+    }
+    .container{ max-width:1100px; margin:0 auto; }
+    header{ display:flex; align-items:center; gap:16px; margin-bottom:18px; }
+    header h1{ margin:0; font-size:1.4rem; }
+    .card{
+      background:var(--card);
+      border-radius:12px;
+      padding:18px;
+      box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+      margin-bottom:18px;
+    }
+    form{ display:grid; grid-template-columns: 1fr 320px; gap:18px; }
+    @media (max-width:880px){ form{ grid-template-columns:1fr; } }
+    .fields{ display:grid; gap:12px; }
+    label{ font-size:0.85rem; color:var(--muted); display:block; margin-bottom:6px; }
+    input[type="text"], input[type="email"], input[type="tel"], select, textarea, input[type="number"], input[type="date"]{
+      width:100%; padding:10px 12px; border-radius:8px; border:1px solid #e6e9ef; font-size:0.95rem;
+      background:transparent;
+    }
+    textarea{ min-height:80px; resize:vertical; }
+    .row{ display:flex; gap:12px; }
+    .small{ flex:1; }
+    .actions{ display:flex; gap:12px; margin-top:8px; }
+    button{
+      padding:10px 14px; border-radius:10px; border:0; cursor:pointer; font-weight:600;
+    }
+    .btn-primary{ background:var(--accent); color:white; }
+    .btn-ghost{ background:transparent; border:1px solid #e6e9ef; color:var(--muted); }
+    .panel{
+      padding:12px; border-radius:10px; border:1px dashed #e6e9ef; text-align:center; min-height:220px;
+      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;
+    }
+    .img-preview{ width:140px; height:140px; border-radius:10px; object-fit:cover; background:#f3f4f6; }
+    table{ width:100%; border-collapse:collapse; margin-top:12px; }
+    th,td{ text-align:left; padding:10px 8px; border-bottom:1px solid #eef2f6; font-size:0.95rem; }
+    th{ background:#fbfdff; color:var(--muted); font-weight:600; font-size:0.85rem; }
+    .tag{ display:inline-block; padding:4px 8px; border-radius:999px; font-size:0.8rem; background:#eef2ff; color:var(--accent); }
+    .small-muted{ font-size:0.85rem; color:var(--muted); }
+    .error{ color:var(--danger); font-size:0.85rem; }
+    .success{ color:var(--success); font-size:0.95rem; font-weight:600; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="card" style="padding:12px;">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" style="display:block">
+          <path d="M12 2L3 7v6c0 5 4 9 9 9s9-4 9-9V7L12 2z" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12 8v6" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <h1>College Student Information</h1>
+        <div class="small-muted">Fill student details — entries are kept in your browser (localStorage).</div>
+      </div>
+    </header>
+
+    <section class="card" aria-labelledby="form-heading">
+      <h2 id="form-heading" style="margin:0 0 12px 0;">Student Details Form</h2>
+      <form id="studentForm" novalidate>
+        <div class="fields">
+          <div>
+            <label for="fullName">Full name *</label>
+            <input id="fullName" name="fullName" type="text" required placeholder="Example: A. Kumar">
+            <div class="error" id="err-name" aria-live="polite"></div>
+          </div>
+
+          <div class="row">
+            <div class="small">
+              <label for="studentId">Student ID *</label>
+              <input id="studentId" name="studentId" type="text" required placeholder="e.g. CSE2025001">
+            </div>
+            <div style="width:140px;">
+              <label for="year">Year *</label>
+              <select id="year" name="year" required>
+                <option value="">Select</option>
+                <option>1st Year</option>
+                <option>2nd Year</option>
+                <option>3rd Year</option>
+                <option>4th Year</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="small">
+              <label for="email">Email *</label>
+              <input id="email" name="email" type="email" required placeholder="student@college.edu">
+            </div>
+            <div style="width:140px;">
+              <label for="semester">Semester</label>
+              <select id="semester" name="semester">
+                <option value="">--</option>
+                <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="small">
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" placeholder="+91 98765 43210">
+            </div>
+            <div style="width:140px;">
+              <label for="dob">Date of birth</label>
+              <input id="dob" name="dob" type="date">
+            </div>
+          </div>
+
+          <div>
+            <label for="department">Department *</label>
+            <select id="department" name="department" required>
+              <option value="">Select Department</option>
+              <option>Computer Science</option>
+              <option>Information Technology</option>
+              <option>Electronics</option>
+              <option>Mechanical</option>
+              <option>Civil</option>
+              <option>Architecture</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="row">
+            <div class="small">
+              <label for="gpa">GPA / CGPA</label>
+              <input id="gpa" name="gpa" type="number" step="0.01" min="0" max="10" placeholder="e.g. 8.45">
+            </div>
+            <div style="width:140px;">
+              <label for="skills">Batch</label>
+              <input id="batch" name="batch" type="text" placeholder="e.g. 2025">
+            </div>
+          </div>
+
+          <div>
+            <label for="skills">Skills / Interests</label>
+            <input id="skills" name="skills" type="text" placeholder="Comma separated - e.g. Python, ML, Cricket">
+          </div>
+
+          <div>
+            <label for="address">Address</label>
+            <textarea id="address" name="address" placeholder="Home address"></textarea>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn-primary">Save Student</button>
+            <button type="reset" class="btn-ghost">Reset</button>
+            <button type="button" id="clearAll" class="btn-ghost" title="Clear all saved students">Clear All</button>
+            <div id="msg" style="margin-left:auto; align-self:center;"></div>
+          </div>
+        </div>
+
+        <aside>
+          <div class="panel">
+            <div style="font-size:0.95rem; color:var(--muted)">Profile photo (optional)</div>
+            <img id="photoPreview" class="img-preview" alt="Profile preview" />
+            <input id="photoInput" accept="image/*" type="file" aria-label="Upload profile photo">
+            <div class="small-muted" style="margin-top:6px;">PNG/JPG up to 1MB recommended</div>
+          </div>
+        </aside>
+
+      </form>
+    </section>
+
+    <section class="card" aria-labelledby="list-heading">
+      <h2 id="list-heading" style="margin:0 0 12px 0;">Saved Students</h2>
+      <div id="noData" class="small-muted">No student records yet. Add a student using the form above.</div>
+      <div id="tableWrap" style="display:none;">
+        <table role="table" id="studentsTable" aria-live="polite">
+          <thead>
+            <tr>
+              <th>Photo</th><th>Name</th><th>ID</th><th>Dept</th><th>Year</th><th>Contact</th><th>GPA</th><th>Skills</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="studentsBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Simple client-side logic: validation, preview, localStorage persistence
+    const form = document.getElementById('studentForm');
+    const photoInput = document.getElementById('photoInput');
+    const photoPreview = document.getElementById('photoPreview');
+    const studentsBody = document.getElementById('studentsBody');
+    const tableWrap = document.getElementById('tableWrap');
+    const noData = document.getElementById('noData');
+    const msg = document.getElementById('msg');
+    const clearAll = document.getElementById('clearAll');
+
+    const STORAGE_KEY = 'students_list_v1';
+
+    // Utility: read students from localStorage
+    function loadStudents(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch(e){
+        console.error('load error', e);
+        return [];
+      }
+    }
+
+    function saveStudents(arr){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+    }
+
+    // Image preview handler
+    photoInput.addEventListener('change', (e)=>{
+      const file = e.target.files[0];
+      if(!file){ photoPreview.src=''; return; }
+      if(file.size > 1024*1024){ alert('Image too large (max ~1MB). Choose a smaller file.'); photoInput.value=''; return; }
+      const reader = new FileReader();
+      reader.onload = ()=> photoPreview.src = reader.result;
+      reader.readAsDataURL(file);
+    });
+
+    // Render table
+    function renderTable(){
+      const students = loadStudents();
+      studentsBody.innerHTML = '';
+      if(!students.length){
+        tableWrap.style.display='none';
+        noData.style.display='block';
+        return;
+      }
+      tableWrap.style.display='block';
+      noData.style.display='none';
+      students.forEach((s, idx)=>{
+        const tr = document.createElement('tr');
+
+        const tdPhoto = document.createElement('td');
+        if(s.photo){
+          const img = document.createElement('img');
+          img.src = s.photo;
+          img.alt = s.fullName;
+          img.style.width='48px';
+          img.style.height='48px';
+          img.style.objectFit='cover';
+          img.style.borderRadius='6px';
+          tdPhoto.appendChild(img);
+        } else {
+          tdPhoto.innerHTML = '<div class="tag">No Photo</div>';
+        }
+
+        const tdName = document.createElement('td'); tdName.textContent = s.fullName;
+        const tdId = document.createElement('td'); tdId.textContent = s.studentId;
+        const tdDept = document.createElement('td'); tdDept.textContent = s.department;
+        const tdYear = document.createElement('td'); tdYear.textContent = s.year;
+        const tdContact = document.createElement('td'); tdContact.innerHTML = (s.email||'') + (s.phone ? '<br><span class="small-muted">'+s.phone+'</span>' : '');
+        const tdGpa = document.createElement('td'); tdGpa.textContent = s.gpa || '-';
+        const tdSkills = document.createElement('td'); tdSkills.textContent = s.skills || '';
+        const tdActions = document.createElement('td');
+
+        const btnDelete = document.createElement('button');
+        btnDelete.textContent='Delete';
+        btnDelete.className='btn-ghost';
+        btnDelete.style.fontSize='0.85rem';
+        btnDelete.addEventListener('click', ()=>{
+          if(!confirm('Delete this student?')) return;
+          const arr = loadStudents();
+          arr.splice(idx,1);
+          saveStudents(arr);
+          renderTable();
+          showMessage('Deleted', 'info');
+        });
+
+        const btnEdit = document.createElement('button');
+        btnEdit.textContent='Edit';
+        btnEdit.className='btn-primary';
+        btnEdit.style.fontSize='0.85rem';
+        btnEdit.style.marginRight='8px';
+        btnEdit.addEventListener('click', ()=>{
+          // populate form with values for editing (remove original after saving to avoid duplicates)
+          const arr = loadStudents();
+          const target = arr[idx];
+          if(!target) return;
+          document.getElementById('fullName').value = target.fullName;
+          document.getElementById('studentId').value = target.studentId;
+          document.getElementById('email').value = target.email;
+          document.getElementById('department').value = target.department;
+          document.getElementById('year').value = target.year;
+          document.getElementById('semester').value = target.semester || '';
+          document.getElementById('phone').value = target.phone || '';
+          document.getElementById('dob').value = target.dob || '';
+          document.getElementById('gpa').value = target.gpa || '';
+          document.getElementById('skills').value = target.skills || '';
+          document.getElementById('address').value = target.address || '';
+          document.getElementById('batch').value = target.batch || '';
+          // show photo in preview
+          photoPreview.src = target.photo || '';
+          // remove the record so saving will re-add it (simple approach)
+          arr.splice(idx,1);
+          saveStudents(arr);
+          renderTable();
+          window.scrollTo({top:0, behavior:'smooth'});
+        });
+
+        tdActions.appendChild(btnEdit);
+        tdActions.appendChild(btnDelete);
+
+        tr.appendChild(tdPhoto);
+        tr.appendChild(tdName);
+        tr.appendChild(tdId);
+        tr.appendChild(tdDept);
+        tr.appendChild(tdYear);
+        tr.appendChild(tdContact);
+        tr.appendChild(tdGpa);
+        tr.appendChild(tdSkills);
+        tr.appendChild(tdActions);
+
+        studentsBody.appendChild(tr);
+      });
+    }
+
+    // Simple message display
+    function showMessage(text, type='success'){
+      msg.textContent = text;
+      msg.className = (type==='success' ? 'success' : 'small-muted');
+      setTimeout(()=>{ msg.textContent=''; }, 3500);
+    }
+
+    // Basic validation
+    function validateForm(data){
+      const errors = {};
+      if(!data.fullName || data.fullName.trim().length < 2) errors.fullName = 'Enter a valid name';
+      if(!data.studentId || data.studentId.trim().length < 3) errors.studentId = 'Enter student ID';
+      if(!data.email || !/^\S+@\S+\.\S+$/.test(data.email)) errors.email = 'Enter a valid email';
+      if(!data.department) errors.department = 'Select department';
+      if(!data.year) errors.year = 'Select year';
+      return errors;
+    }
+
+    // On submit
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      // collect data
+      const data = {
+        fullName: document.getElementById('fullName').value.trim(),
+        studentId: document.getElementById('studentId').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        department: document.getElementById('department').value,
+        year: document.getElementById('year').value,
+        semester: document.getElementById('semester').value,
+        phone: document.getElementById('phone').value.trim(),
+        dob: document.getElementById('dob').value,
+        gpa: document.getElementById('gpa').value,
+        skills: document.getElementById('skills').value,
+        address: document.getElementById('address').value,
+        batch: document.getElementById('batch').value,
+        photo: photoPreview.src || '' // data URL if uploaded
+      };
+
+      // validate
+      const errors = validateForm(data);
+      document.getElementById('err-name').textContent = errors.fullName || '';
+      if(Object.keys(errors).length){
+        showMessage('Fix required fields', 'error');
+        return;
+      }
+
+      // save
+      const arr = loadStudents();
+      arr.push(data);
+      saveStudents(arr);
+      form.reset();
+      photoPreview.src = '';
+      renderTable();
+      showMessage('Student saved', 'success');
+    });
+
+    // Reset preview when form reset
+    form.addEventListener('reset', ()=>{
+      setTimeout(()=>{ photoPreview.src=''; }, 10);
+    });
+
+    clearAll.addEventListener('click', ()=>{
+      if(!confirm('Clear all saved students?')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      renderTable();
+      showMessage('All cleared', 'info');
+    });
+
+    // initial render
+    renderTable();
+
+    // optional: seed sample data if empty (uncomment to use)
+    // if(!loadStudents().length){ saveStudents([{fullName:'Sample Student', studentId:'S001', department:'Computer Science', year:'1st Year'}]); renderTable(); }
+
+  </script>
+</body>
+</html>
